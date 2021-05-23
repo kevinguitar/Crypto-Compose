@@ -29,7 +29,7 @@ class ExchangeInfoRepo @Inject constructor(
     init {
         if (KEY_SYMBOLS in pref) {
             val str = pref.getString(KEY_SYMBOLS, null)
-            _cryptoSymbols.tryEmit(gson.fromJson<List<CryptoSymbol>>(str, typeToken))
+            _cryptoSymbols.tryEmit(gson.fromJson(str, typeToken))
         }
     }
 

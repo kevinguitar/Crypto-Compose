@@ -22,8 +22,15 @@ interface CryptoService {
     fun observeWebSocketEvent(): ReceiveChannel<WebSocket.Event>
 }
 
+private val randomInt: Int
+    get() = System.currentTimeMillis().toInt()
+
 data class SubscribeAction(
-    val id: Int = 1,
-    val method: String = "SUBSCRIBE",
+    val id: Int = randomInt,
+    val method: SubscribeMethod,
     val params: List<String>
 )
+
+enum class SubscribeMethod {
+    SUBSCRIBE, UNSUBSCRIBE
+}
