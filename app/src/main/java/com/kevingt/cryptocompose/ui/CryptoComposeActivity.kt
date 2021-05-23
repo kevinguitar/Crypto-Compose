@@ -5,7 +5,10 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Switch
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -13,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kevingt.cryptocompose.ui.compose.ComposeCryptoTheme
+import com.kevingt.cryptocompose.ui.favorite.FavoriteAssetsView
 import com.kevingt.cryptocompose.utils.ThemeRepo
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -71,10 +75,5 @@ private fun CryptoToolbar(themeRepo: ThemeRepo) {
 
 @Composable
 private fun CryptoContent() {
-    TabRow(
-        selectedTabIndex = 0,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-
-    }
+    FavoriteAssetsView()
 }

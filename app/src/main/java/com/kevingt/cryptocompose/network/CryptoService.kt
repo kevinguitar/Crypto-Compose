@@ -7,6 +7,7 @@ import com.tinder.scarlet.ws.Send
 import kotlinx.coroutines.channels.ReceiveChannel
 
 /**
+ *  Web Socket Market Streams to observe cryptos
  *  https://binance-docs.github.io/apidocs/spot/en/#individual-symbol-ticker-streams
  */
 interface CryptoService {
@@ -21,4 +22,8 @@ interface CryptoService {
     fun observeWebSocketEvent(): ReceiveChannel<WebSocket.Event>
 }
 
-data class SubscribeAction(val params: List<String>)
+data class SubscribeAction(
+    val id: Int = 1,
+    val method: String = "SUBSCRIBE",
+    val params: List<String>
+)
