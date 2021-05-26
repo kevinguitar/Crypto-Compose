@@ -1,11 +1,10 @@
 package com.kevingt.cryptocompose.ui.compose
 
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Typography
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -61,6 +60,12 @@ fun ComposeCryptoTheme(
     MaterialTheme(
         colors = colors,
         typography = typography,
-        content = content
+        content = {
+            Surface(
+                color = MaterialTheme.colors.background,
+                modifier = Modifier.fillMaxSize(),
+                content = content
+            )
+        }
     )
 }

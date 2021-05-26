@@ -13,6 +13,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,7 +27,7 @@ class CryptoRepo @Inject constructor(
     private val editor get() = pref.edit()
 
     private val gson = Gson()
-    private val typeToken = object : TypeToken<List<CryptoSymbol>>() {}.type
+    private val typeToken = object : TypeToken<List<String>>() {}.type
 
     private val _favoriteSymbols = MutableStateFlow<List<String>>(emptyList())
     val favoriteSymbols: StateFlow<List<String>> get() = _favoriteSymbols
@@ -49,6 +50,11 @@ class CryptoRepo @Inject constructor(
                     }
                     Timber.d("CryptoRepo: WebSocket event $event")
                 }
+
+            //TODO: Remove after debug
+            cryptoFlow.collect {
+                Timber.d("CryptoRepo: Received $it")
+            }
         }
     }
 
@@ -80,4 +86,4 @@ class CryptoRepo @Inject constructor(
 private const val KEY_FAVORITES = "favorite_cryptos"
 
 private val String.toParam: String
-    get() = "$this@ticker"
+    get() = "${toLowerCase(Locale.ROOT)}@ticker"

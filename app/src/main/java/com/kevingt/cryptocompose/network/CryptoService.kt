@@ -5,6 +5,7 @@ import com.tinder.scarlet.WebSocket
 import com.tinder.scarlet.ws.Receive
 import com.tinder.scarlet.ws.Send
 import kotlinx.coroutines.channels.ReceiveChannel
+import kotlin.random.Random
 
 /**
  *  Web Socket Market Streams to observe cryptos
@@ -23,7 +24,7 @@ interface CryptoService {
 }
 
 private val randomInt: Int
-    get() = System.currentTimeMillis().toInt()
+    get() = Random(System.currentTimeMillis()).nextInt(100)
 
 data class SubscribeAction(
     val id: Int = randomInt,
