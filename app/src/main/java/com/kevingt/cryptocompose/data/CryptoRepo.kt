@@ -7,11 +7,11 @@ import com.google.gson.reflect.TypeToken
 import com.kevingt.cryptocompose.network.CryptoService
 import com.kevingt.cryptocompose.network.SubscribeAction
 import com.kevingt.cryptocompose.network.SubscribeMethod
+import com.tinder.scarlet.Message
 import com.tinder.scarlet.WebSocket
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -32,30 +32,28 @@ class CryptoRepo @Inject constructor(
     private val _favoriteSymbols = MutableStateFlow<List<String>>(emptyList())
     val favoriteSymbols: StateFlow<List<String>> get() = _favoriteSymbols
 
-    val cryptoFlow: Flow<Crypto>
-        get() = cryptoService.observeCryptos().receiveAsFlow()
-
     init {
         if (KEY_FAVORITES in pref) {
             val str = pref.getString(KEY_FAVORITES, null)
             _favoriteSymbols.tryEmit(gson.fromJson(str, typeToken))
         }
+    }
 
-        GlobalScope.launch {
-            cryptoService.observeWebSocketEvent()
-                .receiveAsFlow()
-                .collect { event ->
-                    if (event is WebSocket.Event.OnConnectionOpened<*>) {
-                        subscribeToStream()
+    suspend fun subscribeToWebSocket(onCryptoReceived: (Crypto) -> Unit) {
+        cryptoService.observeWebSocketEvent()
+            .receiveAsFlow()
+            .flowOn(Dispatchers.IO)
+            .collect { event ->
+                when (event) {
+                    is WebSocket.Event.OnConnectionOpened<*> -> subscribeToStream()
+                    is WebSocket.Event.OnMessageReceived -> {
+                        val rawString = (event.message as Message.Text).value
+                        val crypto = gson.fromJson(rawString, Crypto::class.java)
+                        onCryptoReceived(crypto)
                     }
-                    Timber.d("CryptoRepo: WebSocket event $event")
+                    else -> Unit
                 }
-
-            //TODO: Remove after debug
-            cryptoFlow.collect {
-                Timber.d("CryptoRepo: Received $it")
             }
-        }
     }
 
     fun modifyFavorite(symbol: String, isAdding: Boolean) {
@@ -75,6 +73,7 @@ class CryptoRepo @Inject constructor(
     }
 
     private fun subscribeToStream() {
+        Timber.d("CryptoRepo: Subscribe to stream")
         val action = SubscribeAction(
             method = SubscribeMethod.SUBSCRIBE,
             params = favoriteSymbols.value.map(String::toParam)

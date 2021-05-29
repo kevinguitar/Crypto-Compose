@@ -1,6 +1,5 @@
 package com.kevingt.cryptocompose.network
 
-import com.kevingt.cryptocompose.data.Crypto
 import com.tinder.scarlet.WebSocket
 import com.tinder.scarlet.ws.Receive
 import com.tinder.scarlet.ws.Send
@@ -13,14 +12,11 @@ import kotlin.random.Random
  */
 interface CryptoService {
 
-    @Send
-    fun subscribe(action: SubscribeAction)
-
-    @Receive
-    fun observeCryptos(): ReceiveChannel<Crypto>
-
     @Receive
     fun observeWebSocketEvent(): ReceiveChannel<WebSocket.Event>
+
+    @Send
+    fun subscribe(action: SubscribeAction)
 }
 
 private val randomInt: Int

@@ -1,6 +1,5 @@
 package com.kevingt.cryptocompose.ui.browser
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kevingt.cryptocompose.data.CryptoRepo
@@ -12,7 +11,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AssetBrowserViewModel @Inject constructor(
-    private val stateHandle: SavedStateHandle,
     private val exchangeInfoRepo: ExchangeInfoRepo,
     private val cryptoRepo: CryptoRepo
 ) : ViewModel() {
@@ -24,7 +22,6 @@ class AssetBrowserViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             try {
-                // TODO: re-enable request here
                 exchangeInfoRepo.getExchangeService()
             } catch (t: Throwable) {
                 Timber.e(t)

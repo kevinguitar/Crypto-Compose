@@ -7,16 +7,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.kevingt.cryptocompose.data.Crypto
 
 @Composable
 fun FavoriteAssetsView(
     model: FavoriteAssetsViewModel = viewModel()
 ) {
-    val favoriteSymbols = model.favoriteSymbols.collectAsState().value
+    val favorites = model.favorites.collectAsState().value
 
     LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(count = favoriteSymbols.size) { index ->
-            Text(text = favoriteSymbols[index])
+        items(count = favorites.size) { index ->
+            FavoriteAssetItem(crypto = favorites[index])
         }
     }
+}
+
+@Composable
+fun FavoriteAssetItem(
+    crypto: Crypto
+) {
+    Text(text = "${crypto.symbol}, ${crypto.priceChangePercent}, ${crypto.lastPrice}")
 }

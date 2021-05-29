@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kevingt.cryptocompose.ui.browser.AssetBrowserView
 import com.kevingt.cryptocompose.ui.compose.ComposeCryptoTheme
+import com.kevingt.cryptocompose.ui.favorite.FavoriteAssetsView
 import com.kevingt.cryptocompose.utils.ThemeRepo
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -69,5 +70,8 @@ private fun CryptoToolbar(themeRepo: ThemeRepo) {
 
 @Composable
 private fun CryptoContent() {
-    AssetBrowserView()
+    Column {
+        AssetBrowserView()
+        FavoriteAssetsView()
+    }
 }
