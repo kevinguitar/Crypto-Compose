@@ -35,7 +35,7 @@ class ExchangeInfoRepo @Inject constructor(
 
     suspend fun getExchangeService() {
         val symbols = exchangeService.getExchangeInfo().symbols
-            .filter { it.quoteAsset == "BUSD" && it.status == SymbolStatus.TRADING }
+            .filter { it.quoteAsset == "BUSD" && it.status != SymbolStatus.BREAK }
 
         _cryptoSymbols.emit(symbols)
         editor.putString(KEY_SYMBOLS, gson.toJson(symbols)).apply()

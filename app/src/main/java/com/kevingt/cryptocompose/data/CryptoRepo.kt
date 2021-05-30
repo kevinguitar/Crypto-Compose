@@ -29,7 +29,7 @@ class CryptoRepo @Inject constructor(
     private val gson = Gson()
     private val typeToken = object : TypeToken<List<String>>() {}.type
 
-    private val _favoriteSymbols = MutableStateFlow<List<String>>(emptyList())
+    private val _favoriteSymbols = MutableStateFlow(listOf("BTCBUSD", "ETHBUSD"))
     val favoriteSymbols: StateFlow<List<String>> get() = _favoriteSymbols
 
     init {
