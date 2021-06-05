@@ -12,11 +12,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 private val DarkColorPalette = darkColors(
-
+    primary = Color(0xFFA6C199),
+    primaryVariant = Color(0xFF889D7D)
 )
 
 private val LightColorPalette = lightColors(
-
+    primary = Color(0xFFC5D1BD),
+    primaryVariant = Color(0xFF889D7D)
 )
 
 private val LightTypography = Typography(
