@@ -3,19 +3,19 @@ package com.kevingt.cryptocompose.ui
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Switch
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.kevingt.cryptocompose.R
 import com.kevingt.cryptocompose.ui.browser.AssetBrowserView
 import com.kevingt.cryptocompose.ui.compose.ComposeCryptoTheme
 import com.kevingt.cryptocompose.ui.favorite.FavoriteAssetsView
@@ -60,10 +60,18 @@ private fun CryptoToolbar(themeRepo: ThemeRepo) {
             fontSize = 18.sp,
             modifier = Modifier.weight(1f)
         )
-        //TODO: implement image selector
-        Switch(
-            checked = themeRepo.isDarkThemeState.value,
-            onCheckedChange = themeRepo::setDarkTheme
+        Image(
+            modifier = Modifier
+                .size(24.dp)
+                .clickable { themeRepo.toggleTheme() },
+            painter = painterResource(
+                id = if (themeRepo.isDarkThemeState.value) {
+                    R.drawable.ic_moon
+                } else {
+                    R.drawable.ic_sun
+                }
+            ),
+            contentDescription = "Dark Mode Switch"
         )
     }
 }

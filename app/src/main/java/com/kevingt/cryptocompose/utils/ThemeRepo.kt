@@ -26,9 +26,10 @@ class ThemeRepo @Inject constructor(@ApplicationContext context: Context) {
         }
     }
 
-    fun setDarkTheme(isDarkTheme: Boolean) {
-        editor.putBoolean(KEY_DARK_THEME, isDarkTheme).apply()
-        _isDarkThemeState.value = isDarkTheme
+    fun toggleTheme() {
+        val setToDark = !isDarkThemeState.value
+        editor.putBoolean(KEY_DARK_THEME, setToDark).apply()
+        _isDarkThemeState.value = setToDark
     }
 }
 

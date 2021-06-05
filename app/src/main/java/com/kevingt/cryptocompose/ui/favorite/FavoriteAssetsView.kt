@@ -78,8 +78,8 @@ private fun FavoriteAssetItem(crypto: Crypto) {
                     },
                 )
             }
-            Text(text = crypto.price)
-            Text(text = "${crypto.priceChangePercent}%")
+            Text(text = crypto.price ?: "loading...")
+            Text(text = crypto.percent)
         }
     }
 }
@@ -90,7 +90,7 @@ private fun FavoriteAssetItemPreview() {
     FavoriteAssetItem(
         Crypto(
             symbol = "BTCBUSD",
-            priceChangePercent = "-4.5",
+            priceChangePercent = "4.5000",
             lastPrice = "34598.340000"
         )
     )

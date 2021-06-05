@@ -50,6 +50,7 @@ class CryptoRepo @Inject constructor(
                         val rawString = (event.message as Message.Text).value
                         val crypto = gson.fromJson(rawString, Crypto::class.java)
                         onCryptoReceived(crypto)
+                        Timber.d("Received: $crypto")
                     }
                     else -> Unit
                 }

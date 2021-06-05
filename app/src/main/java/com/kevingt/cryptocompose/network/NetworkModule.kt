@@ -54,7 +54,6 @@ object NetworkModule {
         application: Application,
         okHttpClient: OkHttpClient
     ): Scarlet {
-        //TODO: Lifecycle isn't working for some reason
         val lifecycle = AndroidLifecycle.ofApplicationForeground(application)
         val backoffStrategy = ExponentialWithJitterBackoffStrategy(
             baseDurationMillis = BACKOFF_DURATION,
@@ -66,7 +65,7 @@ object NetworkModule {
             .addMessageAdapterFactory(GsonMessageAdapter.Factory())
             .addStreamAdapterFactory(CoroutinesStreamAdapterFactory())
             .backoffStrategy(backoffStrategy)
-//            .lifecycle(lifecycle)
+            .lifecycle(lifecycle)
             .build()
     }
 
